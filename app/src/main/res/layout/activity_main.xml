@@ -15,11 +15,6 @@
         android:layout_height="match_parent"
         android:layout_margin="10dp">
 
-        <!--androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            /-->
         <TextView
             android:id="@+id/item_title"
             android:layout_width="match_parent"
@@ -41,17 +36,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_title" />
 
-        <!--Button
-            android:id="@+id/btn_Main_Click"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_des"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CLICK"
-            android:onClick="@{()-> viewModel.onClick()}"
-            /-->
-
         <TextView
             android:id="@+id/item_parapraph"
             android:layout_width="match_parent"
@@ -72,6 +56,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_parapraph" />
+
+        <Button
+            android:onClick="btnLayoutLogin"
+            android:id="@+id/btn_Login_Click"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="LOGIN LAYOUT"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_Main_Click" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
