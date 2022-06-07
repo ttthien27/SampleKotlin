@@ -1,5 +1,6 @@
 package com.example.kotlinsample.view.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,11 +15,9 @@ import com.example.kotlinsample.databinding.ActivityMainBinding
 import com.example.kotlinsample.model.Document
 import com.example.kotlinsample.viewmodel.DocumentViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
-    private var mDocument: MutableList<Document> = mutableListOf()
-    var documentAdapter: DocumentAdapter? = null
     private var documentViewModel = DocumentViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +27,27 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = documentViewModel
         binding.executePendingBindings()
 
+        binding.btnLoginClick.setOnClickListener(this)
+
+
+    }
+
+
+    fun btnLayoutLogin(view: View) {
+        val intent: Intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onClick(v: View?) {
+        if (v != null) {
+            when (v.id) {
+                R.id.btn_Login_Click -> {
+                    val intent: Intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                }
+
+            }
+        }
     }
 
 }

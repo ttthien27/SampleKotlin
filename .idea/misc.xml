@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/thien.truong/AndroidStudioProjects/KotlinSample/app/src/main/res/drawable-v24/bg_btn_login.xml" value="0.2385" />
+        <entry key="..\:/Users/thien.truong/AndroidStudioProjects/KotlinSample/app/src/main/res/drawable-v24/bg_shape.xml" value="0.174" />
+        <entry key="..\:/Users/thien.truong/AndroidStudioProjects/KotlinSample/app/src/main/res/drawable/bg_layout_login.xml" value="0.173" />
+        <entry key="..\:/Users/thien.truong/AndroidStudioProjects/KotlinSample/app/src/main/res/layout/activity_login.xml" value="0.3765182186234818" />
         <entry key="..\:/Users/thien.truong/AndroidStudioProjects/KotlinSample/app/src/main/res/layout/activity_main.xml" value="0.15" />
+        <entry key="..\:/Users/thien.truong/AndroidStudioProjects/KotlinSample/app/src/main/res/layout/activity_test.xml" value="0.16510416666666666" />
         <entry key="..\:/Users/thien.truong/AndroidStudioProjects/KotlinSample/app/src/main/res/layout/item_document.xml" value="0.14895833333333333" />
       </map>
     </option>
