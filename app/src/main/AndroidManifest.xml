@@ -17,7 +17,7 @@
         android:theme="@style/Theme.KotlinSample"
         tools:targetApi="31">
         <activity
-            android:name=".view.activity.TestActivity"
+            android:name=".view.activity.MutableLiveDataActivity"
             android:exported="false" />
         <activity
             android:name=".view.activity.LoginActivity"

@@ -28,15 +28,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.executePendingBindings()
 
         binding.btnLoginClick.setOnClickListener(this)
+        binding.btnLiveDataClick.setOnClickListener(this)
 
 
     }
 
 
-    fun btnLayoutLogin(view: View) {
-        val intent: Intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-    }
+
 
     override fun onClick(v: View?) {
         if (v != null) {
@@ -46,6 +44,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     startActivity(intent)
                 }
 
+                R.id.btn_LiveData_Click -> {
+                    val intent: Intent = Intent(this, MutableLiveDataActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
     }
