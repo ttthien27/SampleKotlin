@@ -13,6 +13,7 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.example.kotlinsample.R
 import com.example.kotlinsample.databinding.ActivityWorkManagerExampleBinding
+import com.example.kotlinsample.worker.MyWorker
 import com.example.kotlinsample.worker.WorkManagerExampleWorker
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ class WorkManagerExampleActivity : AppCompatActivity(), View.OnClickListener{
 
     private lateinit var binding : ActivityWorkManagerExampleBinding
     val workRequest = OneTimeWorkRequest.Builder(WorkManagerExampleWorker::class.java).build()
+    val workRequest_v2 = OneTimeWorkRequest.Builder(MyWorker::class.java).build()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +44,9 @@ class WorkManagerExampleActivity : AppCompatActivity(), View.OnClickListener{
         if (v != null) {
             when (v.id) {
                 R.id.btn_WorkManager_Run -> {
-                    WorkManager.getInstance().enqueue(workRequest);
+                    WorkManager.getInstance()
+                        .beginWith(listOf(workRequest, workRequest_v2))
+                        .enqueue();
 
                 }
 
