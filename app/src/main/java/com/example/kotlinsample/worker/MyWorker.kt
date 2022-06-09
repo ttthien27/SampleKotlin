@@ -9,23 +9,12 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-
-class WorkManagerExampleWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams)  {
+class MyWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams)   {
     override fun doWork(): Result {
-
-        for (i:Int in 1..100){
-            runBlocking{
-                delay(300L)
-                Log.d("Worker", "doWork: Count = $i")
-                if (i==100) displayNotification("WorkManagerExampleWorker", "Hey I finished my 2nd work")
-            }
-        }
-
+        displayNotification("MyWorker", "Hey I finished my 1nd work")
         return Result.success()
     }
 
