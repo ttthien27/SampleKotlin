@@ -1,27 +1,18 @@
 package com.example.kotlinsample.viewmodel
 
 
-import android.os.Handler
 import android.util.Log
-import android.widget.Toast
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import com.example.kotlinsample.BR
 import com.example.kotlinsample.api.API
 import com.example.kotlinsample.model.Document
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.concurrent.Flow
 
 class DocumentViewModel : BaseObservable(), Callback<List<Document>> {
 
@@ -62,14 +53,15 @@ class DocumentViewModel : BaseObservable(), Callback<List<Document>> {
 
     }
 
-    private fun changeData() = runBlocking {
-        flowPosition().collect() {
+    private fun changeData() {
+        GlobalScope.launch {flowPosition().collect() {
             title = listDocument?.get(it)?.docTitle.toString()
             description = listDocument?.get(it)?.docDescription.toString()
             Log.d("BindTitle", "ViewModel Des $it = $description ")
             parapraphShort = listDocument?.get(it).docParagraphShort.toString()
             notifyChange()
-        }
+        }  }
+
     }
 
 
@@ -97,7 +89,11 @@ class DocumentViewModel : BaseObservable(), Callback<List<Document>> {
         // flow builder
         for (i in 1..3) {
             emit(i) // emit next value
-            delay(5000)
+            delay(1000)
         }
     }
 }
+
+
+
+

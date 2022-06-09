@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.btnLoginClick.setOnClickListener(this)
         binding.btnLiveDataClick.setOnClickListener(this)
+        binding.btnCoroutineClick.setOnClickListener(this)
 
 
     }
@@ -46,6 +47,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                 R.id.btn_LiveData_Click -> {
                     val intent: Intent = Intent(this, MutableLiveDataActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.btn_Coroutine_Click -> {
+                    val intent: Intent = Intent(this, CoroutineExampleActivity::class.java)
                     startActivity(intent)
                 }
             }
