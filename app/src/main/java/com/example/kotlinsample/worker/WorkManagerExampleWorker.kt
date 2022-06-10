@@ -7,6 +7,7 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.work.Data
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.GlobalScope
@@ -17,16 +18,22 @@ import kotlinx.coroutines.runBlocking
 
 class WorkManagerExampleWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams)  {
     override fun doWork(): Result {
+        return try {
+            val maxCount = inputData.getInt("maxCount", -1)
 
-        for (i:Int in 1..40){
-            runBlocking{
-                delay(300L)
-                Log.d("Worker", "doWork: Count = $i")
-                if (i==40) displayNotification("WorkManagerExampleWorker", "Hey I finished my 1nd work")
+            for (i:Int in 1..maxCount){
+                runBlocking{
+                    delay(300L)
+                    Log.d("Worker", "doWork: Count = $i")
+                    if (i==maxCount) displayNotification("WorkManagerExampleWorker", "Hey I finished my 1nd work")
+                }
             }
+
+            Result.success(createOutputData("----Success----"))
+        } catch (e: Exception) {
+            Result.failure()
         }
 
-        return Result.success()
     }
 
     private fun displayNotification(title: String, task: String) {
@@ -46,5 +53,11 @@ class WorkManagerExampleWorker(context: Context, workerParams: WorkerParameters)
                 .setContentText(task)
                 .setSmallIcon(R.mipmap.sym_def_app_icon)
         notificationManager.notify(1, notification.build())
+    }
+
+    private fun createOutputData(firstData: String): Data {
+        return Data.Builder()
+            .putString("success", firstData)
+            .build()
     }
 }
