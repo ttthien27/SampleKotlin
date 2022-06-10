@@ -8,9 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
+import androidx.work.*
 import com.example.kotlinsample.R
 import com.example.kotlinsample.databinding.ActivityWorkManagerExampleBinding
 import com.example.kotlinsample.worker.MyWorker
@@ -18,13 +16,24 @@ import com.example.kotlinsample.worker.WorkManagerExampleWorker
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 
-class WorkManagerExampleActivity : AppCompatActivity(), View.OnClickListener{
+class WorkManagerExampleActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var binding : ActivityWorkManagerExampleBinding
-    val workRequest = OneTimeWorkRequest.Builder(WorkManagerExampleWorker::class.java).build()
-    val workRequest_v2 = OneTimeWorkRequest.Builder(MyWorker::class.java).build()
+    private lateinit var binding: ActivityWorkManagerExampleBinding
+    val workerExampleRequest = OneTimeWorkRequest.Builder(WorkManagerExampleWorker::class.java).build()
+    val myWorkerRequest = OneTimeWorkRequest.Builder(MyWorker::class.java).build()
+    private val myConstraints = Constraints.Builder()
+        .setRequiresCharging(true)
+        .build()
+    private val request = PeriodicWorkRequest
+        .Builder(WorkManagerExampleWorker::class.java, 15, TimeUnit.MINUTES,30, TimeUnit.SECONDS)
+        .setConstraints(Constraints.NONE)
+        .build()
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +44,9 @@ class WorkManagerExampleActivity : AppCompatActivity(), View.OnClickListener{
 
         binding.btnWorkManagerRun.setOnClickListener(this)
         binding.btnWorkManagerState.setOnClickListener(this)
-
+        binding.btnWorkManagerStatePeriodic.setOnClickListener(this)
+        binding.btnWorkManagerCancel.setOnClickListener(this)
+        binding.btnWorkManagerRunPeriodic.setOnClickListener(this)
 
 
     }
@@ -45,18 +56,46 @@ class WorkManagerExampleActivity : AppCompatActivity(), View.OnClickListener{
             when (v.id) {
                 R.id.btn_WorkManager_Run -> {
                     WorkManager.getInstance()
-                        .beginWith(listOf(workRequest, workRequest_v2))
+                        //.beginWith(listOf(workRequest, workRequest_v2))
+                        .beginWith(workerExampleRequest)
+                        .then(myWorkerRequest)
                         .enqueue();
 
                 }
 
                 R.id.btn_WorkManager_State -> {
-                    WorkManager.getInstance().getWorkInfoByIdLiveData(workRequest.id)
+                    WorkManager.getInstance().getWorkInfoByIdLiveData(workerExampleRequest.id)
                         .observe(this, Observer { workInfo ->
                             if (workInfo != null) {
                                 Log.d("Worker", "Worker State: - ${workInfo.state}")
                             }
                         })
+                }
+
+                R.id.btn_WorkManager_StatePeriodic -> {
+                    WorkManager.getInstance().getWorkInfoByIdLiveData(request.id)
+                        .observe(this, Observer { workInfo ->
+                            if (workInfo != null) {
+                                Log.d("Worker", "Worker State: - ${workInfo.state}")
+                            }
+                        })
+                }
+
+                R.id.btn_WorkManager_Cancel -> {
+                    // by id
+                    WorkManager.getInstance().cancelWorkById(request.id)
+
+                    // by name
+                    //workManager.cancelUniqueWork("sync")
+
+                    // by tag
+                    //workManager.cancelAllWorkByTag("syncTag")
+                }
+
+                R.id.btn_WorkManager_RunPeriodic -> {
+                    WorkManager.getInstance()
+                        //.beginWith(listOf(workRequest, workRequest_v2))
+                        .enqueue(request);
                 }
 
             }
