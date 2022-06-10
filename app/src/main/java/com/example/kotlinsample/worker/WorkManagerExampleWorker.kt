@@ -18,11 +18,11 @@ import kotlinx.coroutines.runBlocking
 class WorkManagerExampleWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams)  {
     override fun doWork(): Result {
 
-        for (i:Int in 1..100){
+        for (i:Int in 1..40){
             runBlocking{
                 delay(300L)
                 Log.d("Worker", "doWork: Count = $i")
-                if (i==100) displayNotification("WorkManagerExampleWorker", "Hey I finished my 2nd work")
+                if (i==40) displayNotification("WorkManagerExampleWorker", "Hey I finished my 1nd work")
             }
         }
 

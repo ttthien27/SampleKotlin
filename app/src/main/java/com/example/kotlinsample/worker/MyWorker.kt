@@ -14,7 +14,10 @@ import kotlinx.coroutines.runBlocking
 
 class MyWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams)   {
     override fun doWork(): Result {
-        displayNotification("MyWorker", "Hey I finished my 1nd work")
+        runBlocking {
+            delay(3000L)
+            displayNotification("MyWorker", "Hey I finished my 2nd work") }
+
         return Result.success()
     }
 
