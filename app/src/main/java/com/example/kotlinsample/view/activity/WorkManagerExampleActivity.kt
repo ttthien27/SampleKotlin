@@ -90,7 +90,7 @@ class WorkManagerExampleActivity : AppCompatActivity(), View.OnClickListener {
 
                 R.id.btn_WorkManager_Cancel -> {
                     // by id
-                    WorkManager.getInstance().cancelWorkById(request.id)
+                    WorkManager.getInstance(this).cancelWorkById(request.id)
 
                     // by name
                     //workManager.cancelUniqueWork("sync")

@@ -25,7 +25,7 @@ class WorkManagerExampleWorker(context: Context, workerParams: WorkerParameters)
                 runBlocking{
                     delay(300L)
                     Log.d("Worker", "doWork: Count = $i")
-                    if (i==40) displayNotification("WorkManagerExampleWorker", "Hey I finished my 1nd work")
+                    if (i==maxCount) displayNotification("WorkManagerExampleWorker", "Hey I finished my 1nd work")
                 }
             }
 
