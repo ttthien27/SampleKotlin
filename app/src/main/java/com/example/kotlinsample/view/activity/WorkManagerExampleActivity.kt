@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
@@ -23,8 +24,10 @@ import java.util.concurrent.TimeUnit
 class WorkManagerExampleActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityWorkManagerExampleBinding
-    val workerExampleRequest = OneTimeWorkRequest.Builder(WorkManagerExampleWorker::class.java).build()
-    val myWorkerRequest = OneTimeWorkRequest.Builder(MyWorker::class.java).build()
+    private val workerExampleRequest = OneTimeWorkRequest.Builder(WorkManagerExampleWorker::class.java)
+        .setInputData(createInputData())
+        .build()
+    private val myWorkerRequest = OneTimeWorkRequest.Builder(MyWorker::class.java).build()
     private val myConstraints = Constraints.Builder()
         .setRequiresCharging(true)
         .build()
@@ -68,6 +71,10 @@ class WorkManagerExampleActivity : AppCompatActivity(), View.OnClickListener {
                         .observe(this, Observer { workInfo ->
                             if (workInfo != null) {
                                 Log.d("Worker", "Worker State: - ${workInfo.state}")
+                                if(workInfo.state.isFinished){
+                                    Toast.makeText(this, workInfo.outputData.getString("success"), Toast.LENGTH_LONG)
+                                        .show()
+                                }
                             }
                         })
                 }
@@ -100,5 +107,11 @@ class WorkManagerExampleActivity : AppCompatActivity(), View.OnClickListener {
 
             }
         }
+    }
+
+    private fun createInputData(): Data {
+        return Data.Builder()
+            .putInt("maxCount", 30)
+            .build()
     }
 }
